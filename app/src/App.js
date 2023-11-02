@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Window1 from "./components/Window1";
+import Window2 from "./components/Window2";
+import Window3 from "./components/Window3";
+import Modal from "./components/Modal";
+import Header from "./components/Header"; // Importe o componente de cabeçalho
+import "./App.css";
 
 function App() {
+  const [activeWindow, setActiveWindow] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header /> {/* Renderize o componente de cabeçalho aqui */}
+      <div className="windows">
+        {activeWindow === 1 && <Window1 />}
+        {activeWindow === 2 && <Window2 />}
+        {activeWindow === 3 && <Window3 />}
+      </div>
+      <div className="menu">
+        <button onClick={() => setActiveWindow(1)}>Window 1</button>
+        <button onClick={() => setActiveWindow(2)}>Window 2</button>
+        <button onClick={() => setActiveWindow(3)}>Window 3</button>
+        <button onClick={openModal}>Open Modal</button>
+      </div>
+      <Modal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 }
